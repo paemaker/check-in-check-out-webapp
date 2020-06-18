@@ -25,7 +25,6 @@ export default class Profile extends Component
       history: []
     }
   }
-
   componentDidMount()
   {
     axios.get('http://139.180.147.221:8101/admin/showmemberhistory/' + this.state.person.member_id , {headers: {'Authorization': Token}})
@@ -38,7 +37,6 @@ export default class Profile extends Component
       console.log(e, '= Error')
     })
   }
-
   componentWillMount()
   {
     if(this.props.location.profile) 
@@ -70,10 +68,9 @@ export default class Profile extends Component
           message     : 'Done!',
           description : 'Member has already been deleted.'
         })
-
         setTimeout(() => {
           window.location=('/Homefront');
-        }, 2500);
+        }, 1500);
       }
     }).catch(error => {
       notification.error({
@@ -185,7 +182,7 @@ export default class Profile extends Component
             </Header>
 
             <Content style={{padding: '0 50px'}}>
-              <Breadcrumb separator="" style={{ margin: '20px 0px 0px 10px' }}>
+              <Breadcrumb separator="" style={{ margin: '20px 0px 0px 0px' }}>
                 <Breadcrumb.Item>
                     <Link to="/Dashboard">
                         <Text strong style={{color: '#40a9ff'}}><BarsOutlined /> Dashboard </Text>
@@ -202,7 +199,7 @@ export default class Profile extends Component
                   <Text strong><UserOutlined /> Profile </Text>
                 </Breadcrumb.Item>
               </Breadcrumb>
-              <Text style={{fontSize: '36px', margin: '20px 0px 0px 10px'}}>Profile</Text>
+              <Text style={{fontSize: '36px', margin: '20px 0px 0px 0px'}}>Profile</Text>
               
               <Card className="card_Profile">
                 <Row>

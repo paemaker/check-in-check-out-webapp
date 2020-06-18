@@ -1,9 +1,8 @@
 import {
     ApiOutlined,
-    BarsOutlined,
     IdcardOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Button, Col, DatePicker, Layout, Row, Space, Table, Tag, Typography } from 'antd';
+import { Button, Col, DatePicker, Layout, Row, Space, Table, Tag, Typography } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 
@@ -29,20 +28,8 @@ class Dashboard extends Component
         super(props);
         this.state = 
         {
-            dashD: false,
             person: [],
-            status: '',
-            note: '',
-            id: ''
         }
-        this.toggleDashD = this.toggleDashD.bind(this);
-    }
-    toggleDashD()
-    {
-        this.setState
-        ({
-            dashD: !this.state.dashD
-        })
     }
 
     componentDidMount()
@@ -65,41 +52,6 @@ class Dashboard extends Component
             localStorage.removeItem('lgtoken')
             console.log(localStorage.getItem('lgtoken'))
             window.location=('/LogIn')
-        })
-    }
-
-    handleSubmit = values =>
-    {
-        this.setState
-        ({
-            status  :   values.status,
-            note    :   values.note,
-        })
-        const user =
-        {
-            'status'    :   this.state.status,
-            'note'      :   this.state.note,
-        }
-        
-        axios.post('http://139.180.147.221:8101/admin/addleave/' + this.state.person.member_id, {headers: {'Authorization': Token}})
-        .then(res => {
-            console.log(res.data)
-        })
-        .catch(error => {
-            console.log('Error', error)
-        })
-
-    }
-    handleChange = element =>
-    {
-        const {name ,value} = element.target
-        console.log(name, value);
-        this.setState({ [name]: value })
-    }
-    handleRadio = (value) =>
-    {
-        this.setState({
-            position: value
         })
     }
 
@@ -137,7 +89,7 @@ class Dashboard extends Component
                       let color = tag ;
                       if (tag === 'ATTEND') 
                       {
-                        color = 'green';
+                          color = 'green';
                       }
                       else if (tag === 'LATE')
                       {
@@ -150,6 +102,11 @@ class Dashboard extends Component
                       else if (tag === 'ABSENCE')
                       {
                           color = 'red';
+                      }
+                      else if (tag === null)
+                      {
+                          color = 'red'
+                          return (null);
                       }
                       return (
                         <Tag color={color} key={tag}>
@@ -213,11 +170,6 @@ class Dashboard extends Component
                 </Header>
                 
                 <Content style={{ padding: '0px 50px' }} >
-                    {/* <Breadcrumb separator="" style={{ margin: '20px 0' }}>
-                        <Breadcrumb.Item>
-                            <Text strong><BarsOutlined /> Dashboard</Text>
-                        </Breadcrumb.Item>
-                    </Breadcrumb> */}
                     <Text style={{fontSize: '36px'}}>Dashboard</Text>
 
 

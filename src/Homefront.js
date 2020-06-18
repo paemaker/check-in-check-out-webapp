@@ -4,7 +4,7 @@ import {
   IdcardOutlined,
   UserAddOutlined
 } from '@ant-design/icons';
-import { Breadcrumb, Button, Card, Col, Layout, Modal, Row, Space, Typography, notification } from 'antd';
+import { Breadcrumb, Button, Card, Col, Layout, Row, Space, Typography } from 'antd';
 import React, { Component } from 'react';
 
 import { AddMember } from './imandex';
@@ -24,14 +24,6 @@ export default class Homefront extends Component
         {
             memberD: false,
             person: [],
-            username: '',
-            firstname: '',
-            lastname: '',
-            nickname: '',
-            email: '',
-            position: '',
-            fileList: [],
-            uploading: false
         }
         this.toggleMemberD  = this.toggleMemberD.bind(this);
     }
@@ -44,11 +36,9 @@ export default class Homefront extends Component
     }
     componentDidMount()
     {
-        console.log(Token)
         axios.get('http://139.180.147.221:8101/admin/showmember', {headers: {'Authorization': Token}})
         .then(res => {
         this.setState({person: res.data})
-        // console.log(res.data)
         })
         .catch(e => {
         console.log(e,'= Error')
@@ -62,57 +52,6 @@ export default class Homefront extends Component
             localStorage.removeItem('lgtoken')
             console.log(localStorage.getItem('lgtoken'))
             window.location=('/LogIn')
-        })
-    }
-
-    handleSubmit = values =>
-    {
-        console.log("this.handleSubmit",values)
-        this.setState
-        ({
-            username    : values.username,
-            firstname   : values.firstname,
-            lastname    : values.lastname,
-            nickname    : values.nickname,
-            email       : values.email,
-            position    : values.position,
-            fileList    : values.fileList
-        })
-        const user = 
-        {
-            'username'      : this.state.username,
-            'firstname'     : this.state.firstname,
-            'lastname'      : this.state.lastname,
-            'nickname'      : this.state.nickname,
-            'email'         : this.state.email,
-            'position'      : this.state.position,
-            'photo'         : this.state.fileList
-        }
-        console.log('>', user)
-
-        
-    } 
-    handleChange = el =>
-    {
-        const {name, value} = el.target
-        console.log(name, '=', value)
-        this.setState({ [name]: value });
-    }
-    handleUpload = () => 
-    {
-        const { fileList } = this.state;
-        const formData = new FormData();
-        console.log(fileList)
-        fileList.forEach(file => 
-        {
-            formData.append('files[]', file);
-        });
-        this.setState({ uploading: true });
-    }
-    handleSelect = value =>
-    {
-        this.setState({
-            position: value
         })
     }
 
@@ -140,7 +79,7 @@ export default class Homefront extends Component
                     </Header>
 
                     <Content style={{ padding: '0 50px' }} >
-                        <Breadcrumb separator="" style={{ margin: '20px 0px 0px 10px' }}>
+                        <Breadcrumb separator="" style={{ margin: '20px 0px 0px 0px' }}>
                                 <Breadcrumb.Item>
                                     <Link to="/Dashboard">
                                         <Text strong style={{color: '#40a9ff'}}><BarsOutlined /> Dashboard </Text>
@@ -151,7 +90,7 @@ export default class Homefront extends Component
                                 <Text strong ><IdcardOutlined /> Member</Text>
                             </Breadcrumb.Item>
                         </Breadcrumb>
-                        <Text style={{fontSize: '36px', margin: '20px 0px 0px 10px'}}>Member</Text>
+                        <Text style={{fontSize: '36px'}}>Member</Text>
                         <Button type='primary' className="addmemButt" style={{margin: '10px 0px 0px 0px'}} onClick={this.toggleMemberD} >
                             <UserAddOutlined /> Add new member 
                         </Button>
@@ -185,8 +124,6 @@ export default class Homefront extends Component
                 </Layout>
 
                 <AddMember openMember={this.state.memberD} closeMember={this.toggleMemberD} 
-                addSubmit={this.handleSubmit} addInput={this.handleChange}
-                addUpload={this.handleUpload} addSelect={this.handleSelect}
                 />
                 
             </div>

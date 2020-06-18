@@ -24,25 +24,12 @@ class DashDrawer extends Component
 
     render()
     {       
-        const Success = type => 
-        {
-            notification[type]
-            ({
-                message: 'Done!',
-                description: "Edited history succesfully."
-            });
-        };
-
-        const Error = type =>
-        {
-            notification[type]
-            ({
-                message: 'Error!',
-                description: "Can't edit the history properly."    
-            });
-        };
-
         const { TextArea } = Input;
+
+        const InsertInfo = values =>
+        {
+                
+        }
 
         return(
             <div >
