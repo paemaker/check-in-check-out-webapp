@@ -22,16 +22,9 @@ header, body, footer
 {
     float: right;
     margin: 15px;
-    background: #fff;
+    /* background: #fff;
     color: green;
-    border-color: green;
-}
-
-.addmemButt:hover
-{
-    background: green;
-    border-color: green;
-    color: #fff;
+    border-color: green; */
 }
 
 .eiloy
@@ -61,8 +54,8 @@ header, body, footer
 .loginButt
 {
     height: 40px;
-    background: #52c41a;
-    border-color: #52c41a;
+    background: #002766;
+    border-color: #011F8B;
     color: #fff;
 }
 
@@ -77,7 +70,7 @@ header, body, footer
 
 .loginBG 
 {
-    background-image: url(./img/fade.png);
+    background-image: url(./img/bg.jpg);
     /* margin: auto;     */
     /* padding: 50px; */
     /* min-height: 900px; */
@@ -95,8 +88,8 @@ header, body, footer
 
 .loginButt:hover
 {
-    background: #79d70f;
-    border-color: #52c41a;
+    background: #0084FF;
+    border-color: #0084FF;
     color: #fff;
 }
 

@@ -204,7 +204,7 @@ class Dashboard extends Component
                         </Col>
                         <Col span={8}>
                             <Link to="/LogIn" onClick={this.Logout}>
-                                <Button danger type='primary' style={{float: 'right', margin: '15px'}} >
+                                <Button danger type='link' style={{float: 'right', margin: '15px 0px', color: 'white'}} >
                                     <ApiOutlined />Log Out
                                 </Button>
                             </Link>
@@ -212,15 +212,14 @@ class Dashboard extends Component
                     </Row>
                 </Header>
                 
-                <Content style={{ padding: '0 50px' }} >
-                    
-                    <Breadcrumb separator="" style={{ margin: '20px 0' }}>
-                        <Breadcrumb.Item>Location</Breadcrumb.Item>
-                        <Breadcrumb.Separator>:</Breadcrumb.Separator>
+                <Content style={{ padding: '0px 50px' }} >
+                    {/* <Breadcrumb separator="" style={{ margin: '20px 0' }}>
                         <Breadcrumb.Item>
                             <Text strong><BarsOutlined /> Dashboard</Text>
                         </Breadcrumb.Item>
-                    </Breadcrumb>
+                    </Breadcrumb> */}
+                    <Text style={{fontSize: '36px'}}>Dashboard</Text>
+
 
                     <div className="table_Dash">
                         <Space>

@@ -176,7 +176,7 @@ export default class Profile extends Component
                 </Col>
                 <Col span={8}>
                   <Link to="/LogIn" onClick={this.Logout}>
-                    <Button danger type='primary' style={{float: 'right', margin: '15px'}} onClick={this.Logout}>
+                    <Button type='link' style={{float: 'right', margin: '15px 0px', color: 'white'}}>
                         <ApiOutlined />Log Out
                     </Button>
                   </Link>
@@ -185,9 +185,7 @@ export default class Profile extends Component
             </Header>
 
             <Content style={{padding: '0 50px'}}>
-              <Breadcrumb separator="" style={{ margin: '20px 0' }}>
-                <Breadcrumb.Item>Location</Breadcrumb.Item>
-                <Breadcrumb.Separator>:</Breadcrumb.Separator>
+              <Breadcrumb separator="" style={{ margin: '20px 0px 0px 10px' }}>
                 <Breadcrumb.Item>
                     <Link to="/Dashboard">
                         <Text strong style={{color: '#40a9ff'}}><BarsOutlined /> Dashboard </Text>
@@ -204,29 +202,29 @@ export default class Profile extends Component
                   <Text strong><UserOutlined /> Profile </Text>
                 </Breadcrumb.Item>
               </Breadcrumb>
+              <Text style={{fontSize: '36px', margin: '20px 0px 0px 10px'}}>Profile</Text>
               
               <Card className="card_Profile">
                 <Row>
                   <Col span={6} style={{display: 'flex', justifyContent: 'center'}}>
-                    <Avatar src={'http://192.168.1.46:3000/' + this.state.person.image} size={230} style={{border: 'solid #002766'}} />
+                    <Avatar src={'http://192.168.1.46:3000/' + this.state.person.image} size={200} style={{border: 'solid #002766'}} />
                   </Col>
-                  <Col span={18} style={{backgroundColor: '#f5f5f5', borderRadius: '10px', padding: '10px'}}>
+                  <Col span={18} style={{backgroundColor: '#F0F8FF', borderRadius: '10px', padding: '10px'}}>
                     <Row>
                       <Col span={12}>
                         <h1>Member Information</h1>
+                        <h3 className="textCard_Profile">Username : {this.state.person.username}</h3>
                         <h3 className="textCard_Profile">Firstname : {this.state.person.firstname} </h3>
                         <h3 className="textCard_Profile">Lasname : {this.state.person.lastname} </h3>
                         <h3 className="textCard_Profile">Nickname : {this.state.person.nickname} </h3> 
-                        <h3 className="textCard_Profile">Position : {this.state.person.position} </h3> 
-                        <h3 className="textCard_Profile">Email : {this.state.person.email} </h3>
                       </Col>
                       <Col span={12}>
                         <br /><br />
-                        <h3 className="textCard_Profile">Username : {this.state.person.username}</h3>
-                        <h3 className="textCard_Profile">Password : </h3>
-                        <h3 className="textCard_Profile">Option : {<Popconfirm placement="bottomRight" title={<Text>Delete {this.state.person.username}?</Text>} 
-                          onConfirm={this.DeleteMember} okText="Yes" okType='danger' cancelText="No">
-                            <a href="#"><Button danger>Delete</Button></a>
+                        <h3 className="textCard_Profile">Position : {this.state.person.position} </h3> 
+                        <h3 className="textCard_Profile">Email : {this.state.person.email} </h3>
+                        <h3 className="textCard_Profile">Option : {<Popconfirm placement="bottomLeft" title="Are you sure delete this member?" 
+                          onConfirm={this.DeleteMember} okText="Yes" cancelText="No">
+                            <a href="#"><Button danger>Delete Member</Button></a>
                           </Popconfirm>}
                         </h3>
                           
@@ -239,6 +237,7 @@ export default class Profile extends Component
               <br />
               <br />
               <div className="table_Profile">
+                <Text strong style={{fontSize: '18px'}}>History</Text> 
                 <DatePicker onChange={onChange} picker="month" style={{float: 'right'}}/>
                 <br /><br />
                 <Table columns={columns}

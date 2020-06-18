@@ -4,7 +4,7 @@ import {
   IdcardOutlined,
   UserAddOutlined
 } from '@ant-design/icons';
-import { Breadcrumb, Button, Card, Col, Layout, Row, Space, Typography, notification } from 'antd';
+import { Breadcrumb, Button, Card, Col, Layout, Modal, Row, Space, Typography, notification } from 'antd';
 import React, { Component } from 'react';
 
 import { AddMember } from './imandex';
@@ -91,6 +91,7 @@ export default class Homefront extends Component
             console.log(res.data.message)
             if(res.data.message === 'add member sucessfull')
             {
+                Modal.success({})
                 notification.success({
                     duration: 0,
                     message: 'Done!',
@@ -143,7 +144,7 @@ export default class Homefront extends Component
                             </Col>
                             <Col span={8}>
                                 <Link to="/LogIn" onClick={this.Logout}>
-                                    <Button danger type='primary' style={{float: 'right', margin: '15px'}}>
+                                    <Button danger type='link' style={{float: 'right', margin: '15px 0px', color: 'white'}}>
                                         <ApiOutlined />Log Out
                                     </Button>
                                 </Link>
@@ -152,12 +153,7 @@ export default class Homefront extends Component
                     </Header>
 
                     <Content style={{ padding: '0 50px' }} >
-                        <Button type='primary' onClick={this.toggleMemberD} className="addmemButt">
-                            <UserAddOutlined /> Add new member 
-                        </Button>
-                        <Breadcrumb separator="" style={{ margin: '20px 0' }}>
-                            <Breadcrumb.Item>Location</Breadcrumb.Item>
-                            <Breadcrumb.Separator>:</Breadcrumb.Separator>
+                        <Breadcrumb separator="" style={{ margin: '20px 0px 0px 10px' }}>
                                 <Breadcrumb.Item>
                                     <Link to="/Dashboard">
                                         <Text strong style={{color: '#40a9ff'}}><BarsOutlined /> Dashboard </Text>
@@ -165,9 +161,14 @@ export default class Homefront extends Component
                                 </Breadcrumb.Item>
                             <Breadcrumb.Separator />
                             <Breadcrumb.Item>
-                                <Text strong><IdcardOutlined /> Member</Text>
+                                <Text strong ><IdcardOutlined /> Member</Text>
                             </Breadcrumb.Item>
                         </Breadcrumb>
+                        <Text style={{fontSize: '36px', margin: '20px 0px 0px 10px'}}>Member</Text>
+                        <Button type='primary' className="addmemButt" style={{margin: '10px 0px 0px 0px'}} onClick={this.toggleMemberD} >
+                            <UserAddOutlined /> Add new member 
+                        </Button>
+
                         <div className="content_Home">
                             <Space align='start' size='large'>
                                 <Row gutter={[38, 30]} align='middle'>

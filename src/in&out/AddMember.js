@@ -59,7 +59,7 @@ export default class AddPersonnel extends Component
         return(
             <>                
                 
-                <Drawer title="Member Registration Form" visible={this.props.openMember}
+                <Drawer title={<h2 style={{margin: '10px 0px 0px 35%'}}>Add member</h2>} visible={this.props.openMember}
                 width={500} onClose={this.props.closeMember}
                 >
                     <Form validateMessages={validateMessages} layout="vertical" onSubmitCapture={this.props.addSubmit} onFinishFailed={onFinishFailed} onFinish={onFinish}>
@@ -89,7 +89,7 @@ export default class AddPersonnel extends Component
                             <Input name="email" placeholder="zz98@gmail.com" allowClear onChange={this.props.addInput}/>
                         </Form.Item>
                         
-                        {/* <Form.Item name="position" label="Position" >
+                        <Form.Item name="position" label="Position" >
                             <Select
                                 name="position"
                                 showSearch
@@ -117,7 +117,7 @@ export default class AddPersonnel extends Component
                                     <UploadOutlined /> Upload
                                 </Button>
                             </Upload>
-                        </Form.Item> */}
+                        </Form.Item>
 
                         <br />
                         <br />
