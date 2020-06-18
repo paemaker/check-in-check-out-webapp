@@ -28,7 +28,7 @@ export default class Profile extends Component
 
   componentDidMount()
   {
-    axios.get('http://192.168.1.46:3000/admin/showmemberhistory/' + this.state.person.member_id , {headers: {'Authorization': Token}})
+    axios.get('http://139.180.147.221:8101/admin/showmemberhistory/' + this.state.person.member_id , {headers: {'Authorization': Token}})
     .then(res => {
       this.setState({
         history: res.data
@@ -61,7 +61,7 @@ export default class Profile extends Component
 
   DeleteMember = () =>
   {
-    axios.get('http://192.168.1.46:3000/admin/delete/' + this.state.person.member_id, {headers: {'Authorization': Token}})
+    axios.get('http://139.180.147.221:8101/admin/delete/' + this.state.person.member_id, {headers: {'Authorization': Token}})
     .then(res => {    
       if(res.data.message === "delete Successfull")
       {
@@ -207,7 +207,7 @@ export default class Profile extends Component
               <Card className="card_Profile">
                 <Row>
                   <Col span={6} style={{display: 'flex', justifyContent: 'center'}}>
-                    <Avatar src={'http://192.168.1.46:3000/' + this.state.person.image} size={200} style={{border: 'solid #002766'}} />
+                    <Avatar src={'http://139.180.147.221:8101/' + this.state.person.image} size={200} style={{border: 'solid #002766'}} />
                   </Col>
                   <Col span={18} style={{backgroundColor: '#F0F8FF', borderRadius: '10px', padding: '10px'}}>
                     <Row>

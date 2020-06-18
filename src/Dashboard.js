@@ -47,7 +47,7 @@ class Dashboard extends Component
 
     componentDidMount()
     {
-        axios.get('http://192.168.1.46:3000/admin/showallhistory', {headers: {'Authorization': Token}})
+        axios.get('http://139.180.147.221:8101/admin/showallhistory', {headers: {'Authorization': Token}})
         .then(res => {
             console.log(res.data)
             this.setState({person: res.data})
@@ -81,7 +81,7 @@ class Dashboard extends Component
             'note'      :   this.state.note,
         }
         
-        axios.post('http://192.168.1.46:3000/admin/addleave/' + this.state.person.member_id, {headers: {'Authorization': Token}})
+        axios.post('http://139.180.147.221:8101/admin/addleave/' + this.state.person.member_id, {headers: {'Authorization': Token}})
         .then(res => {
             console.log(res.data)
         })

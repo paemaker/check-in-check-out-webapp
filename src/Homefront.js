@@ -45,7 +45,7 @@ export default class Homefront extends Component
     componentDidMount()
     {
         console.log(Token)
-        axios.get('http://192.168.1.46:3000/admin/showmember', {headers: {'Authorization': Token}})
+        axios.get('http://139.180.147.221:8101/admin/showmember', {headers: {'Authorization': Token}})
         .then(res => {
         this.setState({person: res.data})
         // console.log(res.data)
@@ -67,6 +67,7 @@ export default class Homefront extends Component
 
     handleSubmit = values =>
     {
+        console.log("this.handleSubmit",values)
         this.setState
         ({
             username    : values.username,
@@ -75,6 +76,7 @@ export default class Homefront extends Component
             nickname    : values.nickname,
             email       : values.email,
             position    : values.position,
+            fileList    : values.fileList
         })
         const user = 
         {
@@ -84,27 +86,11 @@ export default class Homefront extends Component
             'nickname'      : this.state.nickname,
             'email'         : this.state.email,
             'position'      : this.state.position,
+            'photo'         : this.state.fileList
         }
+        console.log('>', user)
+
         
-        axios.post('http://192.168.1.46:3000/admin/addmember', user, {headers: {'Authorization': Token}})
-        .then(res => {
-            console.log(res.data.message)
-            if(res.data.message === 'add member sucessfull')
-            {
-                Modal.success({})
-                notification.success({
-                    duration: 0,
-                    message: 'Done!',
-                    description: <Text>Added member successfully. <br/> Password : "{res.data.password}"</Text>
-                }) 
-                setTimeout(() => {
-                   window.location=('/Homefront') 
-                }, 6000);                
-            }
-        })
-        .catch(e => {
-            console.log('Error =', e)
-        })
     } 
     handleChange = el =>
     {
@@ -116,6 +102,7 @@ export default class Homefront extends Component
     {
         const { fileList } = this.state;
         const formData = new FormData();
+        console.log(fileList)
         fileList.forEach(file => 
         {
             formData.append('files[]', file);
@@ -179,7 +166,7 @@ export default class Homefront extends Component
                                                 hoverable
                                                 class="row"
                                                 style={{ width: 'auto', height: 'auto' }}
-                                                cover={<img alt="Eiloy" src={'http://192.168.1.46:3000/' + item.image} style={{height: 250, width: 250}}/>}
+                                                cover={<img alt="Eiloy" src={'http://139.180.147.221:8101/' + item.image} style={{height: 250, width: 250}}/>}
                                                 >
                                                     <p>
                                                         Username    : {item.username} <br />

@@ -4,6 +4,9 @@ import { Button, Col, Drawer, Form, Input, Row, Select, Space, Upload } from 'an
 import React, { Component } from 'react';
 
 import {UploadOutlined} from '@ant-design/icons';
+import axios from 'axios';
+
+const Token = localStorage.getItem('lgtoken');
 
 const { Option } = Select;
 export default class AddPersonnel extends Component
@@ -49,12 +52,44 @@ export default class AddPersonnel extends Component
         };
 
         const onFinish = values => {
-            console.log('Success:', values);
+            const formData = new FormData();
+            formData.append('username', values.username);
+            formData.append('firstname', values.firstname);
+            formData.append('lastname', values.lastname);
+            formData.append('nickname', values.nickname);
+            formData.append('email', values.email);
+            formData.append('position', values.position);
+            formData.append('photo', values.photo.file);
+            console.log(values);
+            axios.post('http://139.180.147.221:8101/admin/addmember', 
+           formData
+            
+            , {headers: {'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6eyJ1c2VybmFtZSI6ImFkbWluIn0sInJvbGUiOiJBZG1pbiIsImlhdCI6MTU5MjQ3OTgyN30.bDD0VdWsBWMoaKwjCIUADVBj4nQmb80ElAeiiB5juyE', 'Content-Type': 'multipart/form-data'}})
+        .then(res => {
+            console.log('add member>>>>',res)
+            // if(res.data.message === 'add member sucessfull')
+            // {
+            //     notification.success({
+            //         duration: 0,
+            //         message: 'Done!',
+            //         description: <Text>Added member successfully. <br/> Password : "{res.data.password}"</Text>
+            //     }) 
+            //     setTimeout(() => {
+            //        window.location=('/Homefront') 
+            //     }, 6000);                
+            // }
+        })
+        .catch(e => {
+            console.log('Error =', e)
+        })
         };
           
         const onFinishFailed = errorInfo => {
             console.log('Failed:', errorInfo);
         };
+
+        console.log('Success:', Token);
+
 
         return(
             <>                
