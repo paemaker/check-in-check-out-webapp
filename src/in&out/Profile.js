@@ -1,0 +1,260 @@
+import {
+  ApiOutlined,
+  BarsOutlined,
+  IdcardOutlined,
+  UserOutlined
+} from '@ant-design/icons';
+import { Avatar, Breadcrumb, Button, Card, Col, DatePicker, Layout, Popconfirm, Row, Table, Tag, Typography, notification } from 'antd';
+import React, {Component} from 'react';
+
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+const {Header, Content} = Layout;
+const {Text} = Typography;
+const Token = localStorage.getItem('lgtoken')
+
+export default class Profile extends Component
+{
+  constructor(props)
+  {
+    super(props);
+    this.state =
+    {
+      person: [],
+      history: []
+    }
+  }
+
+  componentDidMount()
+  {
+    axios.get('http://192.168.1.46:3000/admin/showmemberhistory/' + this.state.person.member_id , {headers: {'Authorization': Token}})
+    .then(res => {
+      this.setState({
+        history: res.data
+      })
+    })
+    .catch(e => {
+      console.log(e, '= Error')
+    })
+  }
+
+  componentWillMount()
+  {
+    if(this.props.location.profile) 
+    {
+      this.setState
+      ({
+        person: this.props.location.profile,
+      })
+    } else { window.location="/Homefront" }
+  }
+
+  Logout = () =>
+  {
+      axios.get('http://192.168.1.46:3000/admin/logout', {headers: {'Authorization': Token}})
+      .then(res => {
+          localStorage.removeItem('lgtoken')
+          window.location=('/LogIn')
+      })
+  }
+
+  DeleteMember = () =>
+  {
+    axios.get('http://192.168.1.46:3000/admin/delete/' + this.state.person.member_id, {headers: {'Authorization': Token}})
+    .then(res => {    
+      if(res.data.message === "delete Successfull")
+      {
+        notification.success({
+          duration    : '5',
+          message     : 'Done!',
+          description : 'Member has already been deleted.'
+        })
+
+        setTimeout(() => {
+          window.location=('/Homefront');
+        }, 2500);
+      }
+    }).catch(error => {
+      notification.error({
+        duration    : '5',
+        message     : 'Failed!',
+        description : "Member couldn't be deleted."
+      })
+    })
+  }
+  
+    render()
+    {
+      const columns = 
+      [
+        {
+          title: 'Date',
+          dataIndex: 'date',
+          key: 'date',
+          width: 120,
+        },
+        {
+          title: 'Check-In',
+          dataIndex: 'in',
+          key: 'in',
+          width: 160
+        },
+        {
+          title: 'Check-Out',
+          dataIndex: 'out',
+          key: 'out',
+          width: 160
+        },
+        {
+          title: 'Status',
+          key: 'status',
+          dataIndex: 'status',
+          width: 50,
+          render: status => 
+          (
+            <>
+              {status.map(tag => {
+                let color = tag ;
+                if (tag === 'ATTEND') 
+                {
+                  color = 'green';
+                }
+                else if (tag === 'LATE')
+                {
+                    color = 'orange';
+                }
+                else if (tag === 'LEAVE')
+                {
+                    color = 'blue';
+                }
+                else if (tag === 'ABSENCE')
+                {
+                    color = 'red';
+                }
+                return (
+                  <Tag color={color} key={tag}>
+                    {tag.toUpperCase()}
+                  </Tag>
+                );
+              })}
+            </>
+          ),
+        },
+        {
+          title: 'Note',
+          key: 'note',
+          dataIndex: 'note',
+        },
+      ];
+      
+      const data = this.state.history.map(item => 
+      ({
+        key     : item.created_at,
+        date    : item.created_at,
+        in      : item.checkin_at,
+        out     : item.checkout_at,
+        status  : [item.status],
+        note    : item.note 
+      }))
+
+      function onChange(date, dateString)
+      {
+        console.log(date, dateString);
+      }
+      
+        return(
+          <div className="HomeProDashBG">
+
+          <Layout>
+            <Header style={{backgroundColor: '#002766'}}>
+              <Row>
+                <Col span={8}>
+                </Col>
+                <Col span={8} style={{textAlign: 'center'}}>
+                    <Text strong style={{fontSize: '40px', color: '#ffff'}}>Forex City</Text>
+                </Col>
+                <Col span={8}>
+                  <Link to="/LogIn" onClick={this.Logout}>
+                    <Button danger type='primary' style={{float: 'right', margin: '15px'}} onClick={this.Logout}>
+                        <ApiOutlined />Log Out
+                    </Button>
+                  </Link>
+                </Col>
+              </Row>
+            </Header>
+
+            <Content style={{padding: '0 50px'}}>
+              <Breadcrumb separator="" style={{ margin: '20px 0' }}>
+                <Breadcrumb.Item>Location</Breadcrumb.Item>
+                <Breadcrumb.Separator>:</Breadcrumb.Separator>
+                <Breadcrumb.Item>
+                    <Link to="/Dashboard">
+                        <Text strong style={{color: '#40a9ff'}}><BarsOutlined /> Dashboard </Text>
+                    </Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Separator/>
+                <Breadcrumb.Item>
+                  <Link to="/Homefront">
+                    <Text strong style={{color: '#40a9ff'}}><IdcardOutlined /> Member</Text>
+                  </Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Separator />
+                <Breadcrumb.Item>
+                  <Text strong><UserOutlined /> Profile </Text>
+                </Breadcrumb.Item>
+              </Breadcrumb>
+              
+              <Card className="card_Profile">
+                <Row>
+                  <Col span={6} style={{display: 'flex', justifyContent: 'center'}}>
+                    <Avatar src={'http://192.168.1.46:3000/' + this.state.person.image} size={230} style={{border: 'solid #002766'}} />
+                  </Col>
+                  <Col span={18} style={{backgroundColor: '#f5f5f5', borderRadius: '10px', padding: '10px'}}>
+                    <Row>
+                      <Col span={12}>
+                        <h1>Member Information</h1>
+                        <h3 className="textCard_Profile">Firstname : {this.state.person.firstname} </h3>
+                        <h3 className="textCard_Profile">Lasname : {this.state.person.lastname} </h3>
+                        <h3 className="textCard_Profile">Nickname : {this.state.person.nickname} </h3> 
+                        <h3 className="textCard_Profile">Position : {this.state.person.position} </h3> 
+                        <h3 className="textCard_Profile">Email : {this.state.person.email} </h3>
+                      </Col>
+                      <Col span={12}>
+                        <br /><br />
+                        <h3 className="textCard_Profile">Username : {this.state.person.username}</h3>
+                        <h3 className="textCard_Profile">Password : </h3>
+                        <h3 className="textCard_Profile">Option : {<Popconfirm placement="bottomRight" title={<Text>Delete {this.state.person.username}?</Text>} 
+                          onConfirm={this.DeleteMember} okText="Yes" okType='danger' cancelText="No">
+                            <a href="#"><Button danger>Delete</Button></a>
+                          </Popconfirm>}
+                        </h3>
+                          
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Card>
+              
+              <br />
+              <br />
+              <div className="table_Profile">
+                <DatePicker onChange={onChange} picker="month" style={{float: 'right'}}/>
+                <br /><br />
+                <Table columns={columns}
+                dataSource={data}
+                size='small'
+                bordered
+                // title={() => 'History'}
+                style={{ textAlign: 'center' }}
+                >
+                    
+                </Table>
+              </div>
+            </Content>
+          </Layout>
+          
+          </div>
+        );
+    }
+}
