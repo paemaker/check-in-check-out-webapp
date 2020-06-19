@@ -1,10 +1,12 @@
 import { Button, Card, Col, Drawer, Form, Input, Radio, Row, Space, Typography, notification } from 'antd';
 import React, { Component } from 'react';
 
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { setDrawerClose } from '../Redux/Action'
 
 const {Text} = Typography;
+const Token = localStorage.getItem('lgtoken');
 const connector = connect(({ drawer }) =>
 ({
     DrawerType: drawer.type,
@@ -26,9 +28,26 @@ class DashDrawer extends Component
     {       
         const { TextArea } = Input;
 
-        const InsertInfo = values =>
+        const handleSubmit = values =>
         {
-                
+            const user = 
+            {
+                'status': values.status,
+                'note': values.note
+            }
+
+            console.log('>>>', this.props.DrawerData?.Dashboard.id)
+            axios.post('http://139.180.147.221:8101/admin/addleave/' + this.props.DrawerData?.Dashboard.id, user, {headers: {'Authorization': Token}})
+            .then(res => {
+                notification.success({
+                    duration: '5',
+                    message: 'Update successful!!!',
+                    description: 'The information has been updated.'
+                })
+            })
+            .catch(error => {
+                console.log('Error', error)
+            })
         }
 
         return(
@@ -58,24 +77,26 @@ class DashDrawer extends Component
                 </Card>
                 <br/>
                 
-                <Form onSubmitCapture={this.props.Submit}>
+                <Form onFinish={handleSubmit}>
                     <Form.Item label="Status" name="status">
-                        <Radio.Group name="status" size={"large"} defaultValue={'Leave'} onChange={this.props.Rad}>
-                            <Radio value={'Leave'}>Leave</Radio>
-                            <Radio value={'Absence'}>Absence</Radio>
+                        <Radio.Group name="status" size={"large"} onChange={this.props.Rad}>
+                            <Radio value={'LEAVE'}>Leave</Radio>
+                            <Radio value={'ABSENCE'}>Absence</Radio>
                         </Radio.Group>
                     </Form.Item>
                     
                     <Form.Item label="Note" name="note">
-                        <TextArea name="note" rows={10} style={{ width: '450px' }} onChange={this.props.Change}/>
+                        <TextArea name="note" rows={10} style={{ width: '450px' }} allowClear onChange={this.props.Change}/>
+                    </Form.Item>    
+                
+                    <br />
+                    <Form.Item style={{ float: 'right' }}>
+                        <Space>
+                            <Button danger onClick={this.props.closeDrawer}>Cancel</Button>
+                            <Button type='primary' htmlType="submit">Update</Button>
+                        </Space>
                     </Form.Item>
                 </Form>
-                
-                <br />
-                <Space style={{ float: 'right' }}>
-                    <Button danger onClick={this.props.closeDrawer}>Cancel</Button>
-                    <Button type='primary' htmlType="submit">Update</Button>
-                </Space>
             </Drawer>
 
             </div>

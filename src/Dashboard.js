@@ -28,8 +28,18 @@ class Dashboard extends Component
         super(props);
         this.state = 
         {
+            dashD: false,
             person: [],
+            id: ''
         }
+        this.toggleDashD = this.toggleDashD.bind(this);
+    }
+    toggleDashD()
+    {
+        this.setState
+        ({
+            dashD: !this.state.dashD
+        })
     }
 
     componentDidMount()
@@ -103,10 +113,9 @@ class Dashboard extends Component
                       {
                           color = 'red';
                       }
-                      else if (tag === null)
+                      else if(tag === null)
                       {
-                          color = 'red'
-                          return (null);
+                          return null
                       }
                       return (
                         <Tag color={color} key={tag}>
@@ -195,7 +204,7 @@ class Dashboard extends Component
                 </Content>
             </Layout>
             
-            <DashDrawer closeDash={this.toggleDashD} Submit={this.handleSubmit} Change={this.handleChange} Rad={this.handleRadio} />   
+            <DashDrawer closeDash={this.toggleDashD} Submit={this.handleSubmit} />   
             
         </div>
       );

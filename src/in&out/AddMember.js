@@ -33,13 +33,14 @@ export default class AddPersonnel extends Component
         const onFinish = values => 
         {
             const formData = new FormData();
-                formData.append('username', values.username);
-                formData.append('firstname', values.firstname);
-                formData.append('lastname', values.lastname);
-                formData.append('nickname', values.nickname);
-                formData.append('email', values.email);
-                formData.append('position', values.position);
-                formData.append('photo', values.photo.file);
+                formData.append('username',     values.username);
+                formData.append('firstname',    values.firstname);
+                formData.append('lastname',     values.lastname);
+                formData.append('nickname',     values.nickname);
+                formData.append('email',        values.email);
+                formData.append('position',     values.position);
+                formData.append('photo',        values.photo.file);
+            console.log(values);
             axios.post('http://139.180.147.221:8101/admin/addmember', formData, {headers: {'Authorization': Token, 'Content-Type': 'multipart/form-data'}})
             .then(res => {
             if(res.data.message === 'add member sucessfull')
@@ -62,6 +63,8 @@ export default class AddPersonnel extends Component
         const onFinishFailed = errorInfo => {
             console.log('Failed:', errorInfo);
         };
+
+
         return(
             <>                
                 
@@ -70,7 +73,7 @@ export default class AddPersonnel extends Component
                 >
                     <Form validateMessages={validateMessages} layout="vertical" onFinishFailed={onFinishFailed} onFinish={onFinish}>
                         <Form.Item name="username" label="Username" rules={[{ required: true }]} >
-                            <Input name="username" placeholder="zizou05" allowClear />
+                            <Input name="username" placeholder="zizou05" allowClear/>
                         </Form.Item>
                         
                         <Row>
@@ -129,7 +132,7 @@ export default class AddPersonnel extends Component
                         <Form.Item style={{float: 'right'}}>
                             <Space>
                                 <Button onClick={this.props.closeMember} danger>Cancel</Button>
-                                <Button htmlType="submit" type="primary" style={{ marginRight: 8 }}>Submit</Button>
+                                <Button htmlType="submit" type="primary">Submit</Button>
                             </Space>
                         </Form.Item>
                     </Form>         

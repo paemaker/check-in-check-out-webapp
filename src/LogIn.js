@@ -77,9 +77,7 @@ export default class LogIn extends Component
               </a>
             </Form.Item> */}
             <Form.Item>
-              <Button block htmlType="submit" className="loginButt">
-                Log In
-              </Button>
+              <Button block htmlType="submit" className="loginButt">Log In</Button>
             </Form.Item>
             
           </Form>
