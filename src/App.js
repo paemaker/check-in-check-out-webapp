@@ -27,7 +27,7 @@ export default class LogIn extends Component
       if(res.data.message === 'login sucessfull')
       {
         localStorage.setItem('lgtoken', res.data.Token);
-        window.location='/Homefront';
+        window.location='/Dashboard';
       }
       else
       {

@@ -39,11 +39,17 @@ class DashDrawer extends Component
             console.log('>>>', this.props.DrawerData?.Dashboard.id)
             axios.post('http://139.180.147.221:8101/admin/addleave/' + this.props.DrawerData?.Dashboard.id, user, {headers: {'Authorization': Token}})
             .then(res => {
-                notification.success({
-                    duration: '5',
-                    message: 'Update successful!!!',
-                    description: 'The information has been updated.'
-                })
+                if(res.data.message === 'add leave sucessfull')
+                {
+                        notification.success({
+                        duration: '5',
+                        message: 'Update successful!!!',
+                        description: 'The information has been updated.'
+                    })
+                    setTimeout(() => {
+                        window.location="/Dashboard"
+                    }, 2000)
+                }
             })
             .catch(error => {
                 console.log('Error', error)
@@ -54,7 +60,7 @@ class DashDrawer extends Component
             <div >
             
             <Drawer title='Edit History' width={500} visible={this.props.DrawerData !== null} 
-            onClose={() => this.props.setDrawerClose({ type: 'data', data: [this.props.closeDash] })}
+            onClose={() => this.props.setDrawerClose()}
             >
                 <Card>
                     <Row>
@@ -79,7 +85,7 @@ class DashDrawer extends Component
                 
                 <Form onFinish={handleSubmit}>
                     <Form.Item label="Status" name="status">
-                        <Radio.Group name="status" size={"large"} onChange={this.props.Rad}>
+                        <Radio.Group name="status" size={"large"} defaultValue={'LEAVE'} onChange={this.props.Rad}>
                             <Radio value={'LEAVE'}>Leave</Radio>
                             <Radio value={'ABSENCE'}>Absence</Radio>
                         </Radio.Group>

@@ -14,20 +14,21 @@ export const DrawerReduce = ( state = startStates, action ) =>
         case DRAWER_DATA: 
             return action.payload
         case CLOSR_DRAWER:
-            return action.payload
+            return {...startStates}
         default: 
             return state;
     }
 }
 
-export const setDrawerData = (payload) =>
-({
+export const setDrawerData = (payload) =>{
+    console.log('555')
+    return( 
+{
     type: DRAWER_DATA,
     payload
-})
+})}
 
 export const setDrawerClose = () =>
 ({
     type: CLOSR_DRAWER,
-    payload:{ data: false }
 })

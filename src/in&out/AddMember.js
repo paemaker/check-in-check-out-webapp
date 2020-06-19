@@ -98,7 +98,7 @@ export default class AddPersonnel extends Component
                             <Input name="email" placeholder="zz98@gmail.com" allowClear />
                         </Form.Item>
                         
-                        <Form.Item name="position" label="Position" >
+                        <Form.Item name="position" label="Position" rules={[{ required: true }]}>
                             <Select
                                 name="position"
                                 showSearch
@@ -119,7 +119,7 @@ export default class AddPersonnel extends Component
                             </Select>
                         </Form.Item>
                         
-                        <Form.Item name="photo" label="Photo" >
+                        <Form.Item name="photo" label="Photo" rules={[{ required: true }]}>
                             <Upload {...props} name="photo" beforeUpload={() => false}>
                                 <Button style={{width: 450}} >
                                     <UploadOutlined /> Upload

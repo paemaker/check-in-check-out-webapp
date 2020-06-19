@@ -53,7 +53,7 @@ export default class Profile extends Component
       axios.get('http://192.168.1.46:3000/admin/logout', {headers: {'Authorization': Token}})
       .then(res => {
           localStorage.removeItem('lgtoken')
-          window.location=('/LogIn')
+          window.location=('/')
       })
   }
 
@@ -241,7 +241,6 @@ export default class Profile extends Component
                 dataSource={data}
                 size='small'
                 bordered
-                // title={() => 'History'}
                 style={{ textAlign: 'center' }}
                 >
                     

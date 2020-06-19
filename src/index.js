@@ -12,12 +12,12 @@ import Profile        from "./in&out/Profile";
 import { Provider }   from "react-redux";
 import React          from "react";
 import ReactDOM       from "react-dom";
+import Store          from "./Redux/Store";
 import Test           from "./test";
 import Test2          from "./test2";
-import store          from "./reducer/store";
 
 const Main = () => (
-  <Provider store={store}>
+  <Provider store={Store}>
     <BrowserRouter>
       <Switch>
         <Route exact path="/"             component={App} />

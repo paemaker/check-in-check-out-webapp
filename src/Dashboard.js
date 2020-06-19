@@ -61,7 +61,7 @@ class Dashboard extends Component
             console.log(res.data);
             localStorage.removeItem('lgtoken')
             console.log(localStorage.getItem('lgtoken'))
-            window.location=('/LogIn')
+            window.location=('/')
         })
     }
 

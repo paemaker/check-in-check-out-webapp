@@ -16,8 +16,9 @@ export const drawerReducer = ( state = initialState, action ) => {
     }
 }
 
-export const setdrawerData = (payload) => 
-({
+export const setdrawerData = (payload) => {
+    console.log(payload)
+return({
     type: DRAWER_DATA,
     payload,
-})
+})}

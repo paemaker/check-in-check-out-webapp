@@ -1,11 +1,11 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux'
 import logger, {createLogger} from 'redux-logger';
 
-import { DrawReduce } from './Action';
+import { DrawerReduce } from './Action';
 
 const Reducer = combineReducers
 ({
-    drawer: DrawReduce
+    drawer: DrawerReduce
 })
 
 const Store = createStore(Reducer, applyMiddleware(logger));
